@@ -62,13 +62,6 @@ For the hackathon, we will focus on a small number of well-researched case studi
 4. Agreement with Calvin on the data the frontend needs.
 5. A structured data template for receiving research from the scientific team.
 
-### Important note
-We have not started database implementation yet. Therefore, the immediate task is to design the data structure and prepare the backend skeleton.
-
-We should NOT begin manually entering large amounts of scientific data into a database before the schema and required fields have been agreed upon.
-
-In the meantime, research findings should be collected in structured spreadsheets or documents so that they can be imported later.
-
 **Priority:** Critical
 
 ## FIDEL — MICROBIOLOGY & BIOCONVERSION RESEARCH LEAD

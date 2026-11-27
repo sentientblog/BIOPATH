@@ -8,243 +8,243 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as AllocationRouteImport } from "./routes/allocation";
-import { Route as EndUseRouteImport } from "./routes/end-use";
-import { Route as FeedstocksRouteImport } from "./routes/feedstocks";
-import { Route as FingerprintingRouteImport } from "./routes/fingerprinting";
-import { Route as PathwaysRouteImport } from "./routes/pathways";
-import { Route as ReportsRouteImport } from "./routes/reports";
-import { Route as SourceIntelligenceRouteImport } from "./routes/source-intelligence";
-import { Route as FeedstocksFeedstockIdRouteImport } from "./routes/feedstocks.$feedstockId";
-import { Route as ModulesModuleIdRouteImport } from "./routes/modules.$moduleId";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AllocationRouteImport } from './routes/allocation'
+import { Route as EndUseRouteImport } from './routes/end-use'
+import { Route as FeedstocksRouteImport } from './routes/feedstocks'
+import { Route as FingerprintingRouteImport } from './routes/fingerprinting'
+import { Route as PathwaysRouteImport } from './routes/pathways'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as SourceIntelligenceRouteImport } from './routes/source-intelligence'
+import { Route as FeedstocksFeedstockIdRouteImport } from './routes/feedstocks.$feedstockId'
+import { Route as ModulesModuleIdRouteImport } from './routes/modules.$moduleId'
 
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AllocationRoute = AllocationRouteImport.update({
-  id: "/allocation",
-  path: "/allocation",
+  id: '/allocation',
+  path: '/allocation',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const EndUseRoute = EndUseRouteImport.update({
-  id: "/end-use",
-  path: "/end-use",
+  id: '/end-use',
+  path: '/end-use',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const FeedstocksRoute = FeedstocksRouteImport.update({
-  id: "/feedstocks",
-  path: "/feedstocks",
+  id: '/feedstocks',
+  path: '/feedstocks',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const FingerprintingRoute = FingerprintingRouteImport.update({
-  id: "/fingerprinting",
-  path: "/fingerprinting",
+  id: '/fingerprinting',
+  path: '/fingerprinting',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const PathwaysRoute = PathwaysRouteImport.update({
-  id: "/pathways",
-  path: "/pathways",
+  id: '/pathways',
+  path: '/pathways',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const ReportsRoute = ReportsRouteImport.update({
-  id: "/reports",
-  path: "/reports",
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const SourceIntelligenceRoute = SourceIntelligenceRouteImport.update({
-  id: "/source-intelligence",
-  path: "/source-intelligence",
+  id: '/source-intelligence',
+  path: '/source-intelligence',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const FeedstocksFeedstockIdRoute = FeedstocksFeedstockIdRouteImport.update({
-  id: "/$feedstockId",
-  path: "/$feedstockId",
+  id: '/$feedstockId',
+  path: '/$feedstockId',
   getParentRoute: () => FeedstocksRoute,
-} as any);
+} as any)
 const ModulesModuleIdRoute = ModulesModuleIdRouteImport.update({
-  id: "/modules/$moduleId",
-  path: "/modules/$moduleId",
+  id: '/modules/$moduleId',
+  path: '/modules/$moduleId',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/allocation": typeof AllocationRoute;
-  "/end-use": typeof EndUseRoute;
-  "/feedstocks": typeof FeedstocksRouteWithChildren;
-  "/fingerprinting": typeof FingerprintingRoute;
-  "/pathways": typeof PathwaysRoute;
-  "/reports": typeof ReportsRoute;
-  "/source-intelligence": typeof SourceIntelligenceRoute;
-  "/feedstocks/$feedstockId": typeof FeedstocksFeedstockIdRoute;
-  "/modules/$moduleId": typeof ModulesModuleIdRoute;
+  '/': typeof IndexRoute
+  '/allocation': typeof AllocationRoute
+  '/end-use': typeof EndUseRoute
+  '/feedstocks': typeof FeedstocksRouteWithChildren
+  '/fingerprinting': typeof FingerprintingRoute
+  '/pathways': typeof PathwaysRoute
+  '/reports': typeof ReportsRoute
+  '/source-intelligence': typeof SourceIntelligenceRoute
+  '/feedstocks/$feedstockId': typeof FeedstocksFeedstockIdRoute
+  '/modules/$moduleId': typeof ModulesModuleIdRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/allocation": typeof AllocationRoute;
-  "/end-use": typeof EndUseRoute;
-  "/feedstocks": typeof FeedstocksRouteWithChildren;
-  "/fingerprinting": typeof FingerprintingRoute;
-  "/pathways": typeof PathwaysRoute;
-  "/reports": typeof ReportsRoute;
-  "/source-intelligence": typeof SourceIntelligenceRoute;
-  "/feedstocks/$feedstockId": typeof FeedstocksFeedstockIdRoute;
-  "/modules/$moduleId": typeof ModulesModuleIdRoute;
+  '/': typeof IndexRoute
+  '/allocation': typeof AllocationRoute
+  '/end-use': typeof EndUseRoute
+  '/feedstocks': typeof FeedstocksRouteWithChildren
+  '/fingerprinting': typeof FingerprintingRoute
+  '/pathways': typeof PathwaysRoute
+  '/reports': typeof ReportsRoute
+  '/source-intelligence': typeof SourceIntelligenceRoute
+  '/feedstocks/$feedstockId': typeof FeedstocksFeedstockIdRoute
+  '/modules/$moduleId': typeof ModulesModuleIdRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/allocation": typeof AllocationRoute;
-  "/end-use": typeof EndUseRoute;
-  "/feedstocks": typeof FeedstocksRouteWithChildren;
-  "/fingerprinting": typeof FingerprintingRoute;
-  "/pathways": typeof PathwaysRoute;
-  "/reports": typeof ReportsRoute;
-  "/source-intelligence": typeof SourceIntelligenceRoute;
-  "/feedstocks/$feedstockId": typeof FeedstocksFeedstockIdRoute;
-  "/modules/$moduleId": typeof ModulesModuleIdRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/allocation': typeof AllocationRoute
+  '/end-use': typeof EndUseRoute
+  '/feedstocks': typeof FeedstocksRouteWithChildren
+  '/fingerprinting': typeof FingerprintingRoute
+  '/pathways': typeof PathwaysRoute
+  '/reports': typeof ReportsRoute
+  '/source-intelligence': typeof SourceIntelligenceRoute
+  '/feedstocks/$feedstockId': typeof FeedstocksFeedstockIdRoute
+  '/modules/$moduleId': typeof ModulesModuleIdRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/"
-    | "/allocation"
-    | "/end-use"
-    | "/feedstocks"
-    | "/fingerprinting"
-    | "/pathways"
-    | "/reports"
-    | "/source-intelligence"
-    | "/feedstocks/$feedstockId"
-    | "/modules/$moduleId";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/'
+    | '/allocation'
+    | '/end-use'
+    | '/feedstocks'
+    | '/fingerprinting'
+    | '/pathways'
+    | '/reports'
+    | '/source-intelligence'
+    | '/feedstocks/$feedstockId'
+    | '/modules/$moduleId'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | "/"
-    | "/allocation"
-    | "/end-use"
-    | "/feedstocks"
-    | "/fingerprinting"
-    | "/pathways"
-    | "/reports"
-    | "/source-intelligence"
-    | "/feedstocks/$feedstockId"
-    | "/modules/$moduleId";
+    | '/'
+    | '/allocation'
+    | '/end-use'
+    | '/feedstocks'
+    | '/fingerprinting'
+    | '/pathways'
+    | '/reports'
+    | '/source-intelligence'
+    | '/feedstocks/$feedstockId'
+    | '/modules/$moduleId'
   id:
-    | "__root__"
-    | "/"
-    | "/allocation"
-    | "/end-use"
-    | "/feedstocks"
-    | "/fingerprinting"
-    | "/pathways"
-    | "/reports"
-    | "/source-intelligence"
-    | "/feedstocks/$feedstockId"
-    | "/modules/$moduleId";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/allocation'
+    | '/end-use'
+    | '/feedstocks'
+    | '/fingerprinting'
+    | '/pathways'
+    | '/reports'
+    | '/source-intelligence'
+    | '/feedstocks/$feedstockId'
+    | '/modules/$moduleId'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AllocationRoute: typeof AllocationRoute;
-  EndUseRoute: typeof EndUseRoute;
-  FeedstocksRoute: typeof FeedstocksRouteWithChildren;
-  FingerprintingRoute: typeof FingerprintingRoute;
-  PathwaysRoute: typeof PathwaysRoute;
-  ReportsRoute: typeof ReportsRoute;
-  SourceIntelligenceRoute: typeof SourceIntelligenceRoute;
-  ModulesModuleIdRoute: typeof ModulesModuleIdRoute;
+  IndexRoute: typeof IndexRoute
+  AllocationRoute: typeof AllocationRoute
+  EndUseRoute: typeof EndUseRoute
+  FeedstocksRoute: typeof FeedstocksRouteWithChildren
+  FingerprintingRoute: typeof FingerprintingRoute
+  PathwaysRoute: typeof PathwaysRoute
+  ReportsRoute: typeof ReportsRoute
+  SourceIntelligenceRoute: typeof SourceIntelligenceRoute
+  ModulesModuleIdRoute: typeof ModulesModuleIdRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/allocation": {
-      id: "/allocation";
-      path: "/allocation";
-      fullPath: "/allocation";
-      preLoaderRoute: typeof AllocationRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/end-use": {
-      id: "/end-use";
-      path: "/end-use";
-      fullPath: "/end-use";
-      preLoaderRoute: typeof EndUseRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/feedstocks": {
-      id: "/feedstocks";
-      path: "/feedstocks";
-      fullPath: "/feedstocks";
-      preLoaderRoute: typeof FeedstocksRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/fingerprinting": {
-      id: "/fingerprinting";
-      path: "/fingerprinting";
-      fullPath: "/fingerprinting";
-      preLoaderRoute: typeof FingerprintingRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/pathways": {
-      id: "/pathways";
-      path: "/pathways";
-      fullPath: "/pathways";
-      preLoaderRoute: typeof PathwaysRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/reports": {
-      id: "/reports";
-      path: "/reports";
-      fullPath: "/reports";
-      preLoaderRoute: typeof ReportsRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/source-intelligence": {
-      id: "/source-intelligence";
-      path: "/source-intelligence";
-      fullPath: "/source-intelligence";
-      preLoaderRoute: typeof SourceIntelligenceRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/feedstocks/$feedstockId": {
-      id: "/feedstocks/$feedstockId";
-      path: "/$feedstockId";
-      fullPath: "/feedstocks/$feedstockId";
-      preLoaderRoute: typeof FeedstocksFeedstockIdRouteImport;
-      parentRoute: typeof FeedstocksRoute;
-    };
-    "/modules/$moduleId": {
-      id: "/modules/$moduleId";
-      path: "/modules/$moduleId";
-      fullPath: "/modules/$moduleId";
-      preLoaderRoute: typeof ModulesModuleIdRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/allocation': {
+      id: '/allocation'
+      path: '/allocation'
+      fullPath: '/allocation'
+      preLoaderRoute: typeof AllocationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/end-use': {
+      id: '/end-use'
+      path: '/end-use'
+      fullPath: '/end-use'
+      preLoaderRoute: typeof EndUseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedstocks': {
+      id: '/feedstocks'
+      path: '/feedstocks'
+      fullPath: '/feedstocks'
+      preLoaderRoute: typeof FeedstocksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fingerprinting': {
+      id: '/fingerprinting'
+      path: '/fingerprinting'
+      fullPath: '/fingerprinting'
+      preLoaderRoute: typeof FingerprintingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pathways': {
+      id: '/pathways'
+      path: '/pathways'
+      fullPath: '/pathways'
+      preLoaderRoute: typeof PathwaysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/source-intelligence': {
+      id: '/source-intelligence'
+      path: '/source-intelligence'
+      fullPath: '/source-intelligence'
+      preLoaderRoute: typeof SourceIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedstocks/$feedstockId': {
+      id: '/feedstocks/$feedstockId'
+      path: '/$feedstockId'
+      fullPath: '/feedstocks/$feedstockId'
+      preLoaderRoute: typeof FeedstocksFeedstockIdRouteImport
+      parentRoute: typeof FeedstocksRoute
+    }
+    '/modules/$moduleId': {
+      id: '/modules/$moduleId'
+      path: '/modules/$moduleId'
+      fullPath: '/modules/$moduleId'
+      preLoaderRoute: typeof ModulesModuleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface FeedstocksRouteChildren {
-  FeedstocksFeedstockIdRoute: typeof FeedstocksFeedstockIdRoute;
+  FeedstocksFeedstockIdRoute: typeof FeedstocksFeedstockIdRoute
 }
 
 const FeedstocksRouteChildren: FeedstocksRouteChildren = {
   FeedstocksFeedstockIdRoute: FeedstocksFeedstockIdRoute,
-};
+}
 
 const FeedstocksRouteWithChildren = FeedstocksRoute._addFileChildren(
   FeedstocksRouteChildren,
-);
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -256,16 +256,16 @@ const rootRouteChildren: RootRouteChildren = {
   ReportsRoute: ReportsRoute,
   SourceIntelligenceRoute: SourceIntelligenceRoute,
   ModulesModuleIdRoute: ModulesModuleIdRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx";
-import type { createStart } from "@tanstack/react-start";
-declare module "@tanstack/react-start" {
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true;
-    router: Awaited<ReturnType<typeof getRouter>>;
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
   }
 }

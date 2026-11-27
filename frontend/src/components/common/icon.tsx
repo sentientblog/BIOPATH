@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 /** Material Symbols Outlined icon — the icon set used in the Stitch design. */
 export function Icon({
@@ -8,16 +8,16 @@ export function Icon({
   className,
   label,
 }: {
-  name: string
-  size?: number
-  filled?: boolean
-  className?: string
+  name: string;
+  size?: number;
+  filled?: boolean;
+  className?: string;
   /** When set, the icon is announced; otherwise it is decorative. */
-  label?: string
+  label?: string;
 }) {
   return (
     <span
-      className={cn('material-symbols-outlined', className)}
+      className={cn("material-symbols-outlined", className)}
       style={{
         fontSize: size,
         width: size,
@@ -25,10 +25,10 @@ export function Icon({
         fontVariationSettings: `'FILL' ${filled ? 1 : 0}, 'wght' 400, 'GRAD' 0, 'opsz' ${size >= 24 ? 24 : 20}`,
       }}
       aria-hidden={label ? undefined : true}
-      role={label ? 'img' : undefined}
+      role={label ? "img" : undefined}
       aria-label={label}
     >
       {name}
     </span>
-  )
+  );
 }

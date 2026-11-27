@@ -1,0 +1,6 @@
+# Local Netlify folder
+.netlify
+# Local env
+.env.local
+# Build output
+dist/

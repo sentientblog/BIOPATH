@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Home,
-})
+});
 
 function Home() {
   return (
@@ -15,13 +15,13 @@ function Home() {
           Your application is ready to deploy
         </p>
         <p className="mt-12 text-sm text-muted-foreground">
-          Edit{' '}
+          Edit{" "}
           <code className="px-2 py-1 border rounded-md bg-muted">
             src/routes/index.tsx
-          </code>{' '}
+          </code>{" "}
           to get started
         </p>
       </div>
     </div>
-  )
+  );
 }

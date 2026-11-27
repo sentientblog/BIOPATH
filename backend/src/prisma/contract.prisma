@@ -1,0 +1,37 @@
+// use prisma-8
+
+model Supplier {
+  id        Int      @id @default(autoincrement())
+  name      String
+  siteName  String
+  county    String
+  town      String?
+  batches   Batch[]
+  createdAt DateTime @default(now()) @onCreate(now())
+  updatedAt temporal.UpdatedAt
+}
+
+model Feedstock {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  category    String
+  description String?
+  batches     Batch[]
+  createdAt   DateTime @default(now()) @onCreate(now())
+  updatedAt   temporal.UpdatedAt
+}
+
+model Batch {
+  id             Int       @id @default(autoincrement())
+  batchCode      String    @unique
+  supplierId     Int
+  feedstockId    Int
+  supplier       Supplier  @relation(fields: [supplierId], references: [id])
+  feedstock      Feedstock @relation(fields: [feedstockId], references: [id])
+  quantity       Float
+  quantityUnit   String
+  collectionDate DateTime
+  notes          String?
+  createdAt      DateTime  @default(now()) @onCreate(now())
+  updatedAt      temporal.UpdatedAt
+}

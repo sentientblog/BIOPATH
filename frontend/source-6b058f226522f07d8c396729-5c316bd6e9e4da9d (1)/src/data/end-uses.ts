@@ -1,0 +1,205 @@
+import type { EndUse, EvidenceLevel, PathwayFit } from './types'
+
+/**
+ * DEMO END-USE CATALOGUE
+ * Fit scores and evidence levels are illustrative expert-style judgements for
+ * prototyping, not a regulatory or scientific determination.
+ */
+
+type FitTuple = [0 | 1 | 2 | 3, EvidenceLevel, string]
+const fits = (o: Record<string, FitTuple>): Record<string, PathwayFit> =>
+  Object.fromEntries(Object.entries(o).map(([k, [score, evidence, note]]) => [k, { score, evidence, note }]))
+
+export const END_USES: EndUse[] = [
+  {
+    id: 'meat-analogue', name: 'Meat analogues', sector: 'Human food',
+    description: 'Fibrous, whole-cut or minced plant- or fungal-based meat alternatives.',
+    minProtein: 40, valueTier: 'High', indicativePrice: { value: 6.5, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Texture & fibrosity', 'Neutral flavour', 'Food-grade process'],
+    regulatory: 'Novel-food or food-safety approval likely required for new organisms or substrates.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals', 'cyanogenic'],
+    pathwayFit: fits({
+      'fungal-ssf': [2, 'established', 'Traditional fermented foods show precedent; texture varies with substrate.'],
+      'submerged-myco': [3, 'established', 'Mycelial biomass provides native fibrous texture.'],
+      'enzymatic-hydrolysis': [1, 'emerging', 'Hydrolysates lose functionality needed for structure.'],
+      'alkaline-extraction': [3, 'established', 'Isolates are standard inputs for extrusion.'],
+      'insect-bsf': [0, 'theoretical', 'BSF not generally permitted for human food in most markets.'],
+      'yeast-scp': [1, 'emerging', 'Used as flavour/protein booster rather than structure.'],
+      'microalgae-mixo': [1, 'emerging', 'Colour and flavour limit inclusion.'],
+    }),
+  },
+  {
+    id: 'protein-ingredient', name: 'Protein concentrate ingredient', sector: 'Human food',
+    description: 'Functional protein powders for beverages, bars and formulated foods.',
+    minProtein: 60, valueTier: 'High', indicativePrice: { value: 4.8, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Solubility & functionality', 'Microbiological specification', 'Consistent composition'],
+    regulatory: 'Specification and contaminant limits under national food standards.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals', 'cyanogenic'],
+    pathwayFit: fits({
+      'fungal-ssf': [0, 'theoretical', 'Product protein too low for concentrate specification.'],
+      'submerged-myco': [2, 'emerging', 'Possible after fractionation.'],
+      'enzymatic-hydrolysis': [3, 'established', 'Hydrolysates widely used for solubility.'],
+      'alkaline-extraction': [3, 'established', 'Primary industrial route to concentrates.'],
+      'insect-bsf': [0, 'theoretical', 'Not food-approved in most markets.'],
+      'yeast-scp': [2, 'established', 'Yeast protein extracts are commercial.'],
+      'microalgae-mixo': [2, 'emerging', 'Requires decolourisation.'],
+    }),
+  },
+  {
+    id: 'bakery-fortification', name: 'Bakery & staple fortification', sector: 'Human food',
+    description: 'Partial flour replacement to raise protein and fibre in breads, porridges and snacks.',
+    minProtein: 18, valueTier: 'Medium', indicativePrice: { value: 1.6, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Fine milling', 'Low off-flavour', 'Shelf stability'],
+    regulatory: 'Generally permitted if source material is food-grade and contaminants are within limits.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals', 'cyanogenic'],
+    pathwayFit: fits({
+      'fungal-ssf': [3, 'established', 'Fermented flours have long culinary precedent.'],
+      'submerged-myco': [2, 'emerging', 'Dried mycelium flours under development.'],
+      'enzymatic-hydrolysis': [2, 'established', 'Used at low inclusion.'],
+      'alkaline-extraction': [2, 'established', 'Isolates effective but costly for staples.'],
+      'insect-bsf': [0, 'theoretical', 'Not food-approved in most markets.'],
+      'yeast-scp': [2, 'established', 'Nutritional yeast precedent.'],
+      'microalgae-mixo': [1, 'emerging', 'Colour limits inclusion.'],
+    }),
+  },
+  {
+    id: 'dairy-alternative', name: 'Dairy alternatives', sector: 'Human food',
+    description: 'Plant- or fermentation-based beverages, yoghurts and spreads.',
+    minProtein: 55, valueTier: 'High', indicativePrice: { value: 5.2, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['High solubility', 'Emulsification', 'Clean flavour'],
+    regulatory: 'Labelling restrictions on dairy terms may apply.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals', 'cyanogenic'],
+    pathwayFit: fits({
+      'fungal-ssf': [0, 'theoretical', 'Insoluble product.'],
+      'submerged-myco': [1, 'emerging', 'Requires extensive processing.'],
+      'enzymatic-hydrolysis': [3, 'established', 'Improves solubility and emulsification.'],
+      'alkaline-extraction': [2, 'established', 'Isolates usable with homogenisation.'],
+      'insect-bsf': [0, 'theoretical', 'Not applicable.'],
+      'yeast-scp': [1, 'emerging', 'Flavour constraints.'],
+      'microalgae-mixo': [1, 'emerging', 'Colour constraints.'],
+    }),
+  },
+  {
+    id: 'poultry-feed', name: 'Poultry feed', sector: 'Animal feed',
+    description: 'Protein meal replacing soybean or fish meal in broiler and layer rations.',
+    minProtein: 25, valueTier: 'Medium', indicativePrice: { value: 0.75, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Digestible lysine & methionine', 'Low anti-nutrients', 'Pelletability'],
+    regulatory: 'Feed-safety registration; substrate restrictions for insect meal vary by jurisdiction.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals'],
+    pathwayFit: fits({
+      'fungal-ssf': [3, 'established', 'Fermented meals improve digestibility.'],
+      'submerged-myco': [2, 'emerging', 'Cost-competitiveness unproven.'],
+      'enzymatic-hydrolysis': [2, 'established', 'Hydrolysates valued in starter diets.'],
+      'alkaline-extraction': [1, 'established', 'Usually too costly for feed.'],
+      'insect-bsf': [3, 'established', 'Larval meal widely trialled in poultry.'],
+      'yeast-scp': [3, 'established', 'Yeast protein used in feed.'],
+      'microalgae-mixo': [1, 'emerging', 'Mainly as pigment/additive.'],
+    }),
+  },
+  {
+    id: 'aquafeed', name: 'Aquafeed', sector: 'Animal feed',
+    description: 'Fish-meal replacement in tilapia, catfish and shrimp diets.',
+    minProtein: 35, valueTier: 'Medium', indicativePrice: { value: 1.2, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['High digestible protein', 'Attractant palatability', 'Water stability'],
+    regulatory: 'Feed-safety registration; contaminant limits.',
+    blockingFlags: ['mycotoxin', 'metals'],
+    pathwayFit: fits({
+      'fungal-ssf': [1, 'emerging', 'Protein density often insufficient.'],
+      'submerged-myco': [2, 'emerging', 'Promising fish-meal alternative.'],
+      'enzymatic-hydrolysis': [3, 'established', 'Hydrolysates are effective attractants.'],
+      'alkaline-extraction': [2, 'established', 'High protein but costly.'],
+      'insect-bsf': [3, 'established', 'Larval meal widely trialled in fish.'],
+      'yeast-scp': [3, 'established', 'Yeast protein used in aquaculture.'],
+      'microalgae-mixo': [3, 'established', 'Algae used in hatchery and shrimp feeds.'],
+    }),
+  },
+  {
+    id: 'pig-feed', name: 'Pig feed', sector: 'Animal feed',
+    description: 'Protein supplement for grower and finisher pig diets.',
+    minProtein: 20, valueTier: 'Low', indicativePrice: { value: 0.6, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Digestible lysine', 'Energy density', 'Low fibre'],
+    regulatory: 'Feed-safety registration.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals'],
+    pathwayFit: fits({
+      'fungal-ssf': [3, 'established', 'Fermented feeds improve gut health.'],
+      'submerged-myco': [1, 'emerging', 'Cost limits feed use.'],
+      'enzymatic-hydrolysis': [2, 'established', 'Used in piglet diets.'],
+      'alkaline-extraction': [1, 'established', 'Too costly for most feed.'],
+      'insect-bsf': [3, 'established', 'Larval meal trialled in pigs.'],
+      'yeast-scp': [2, 'established', 'Yeast products common in pig diets.'],
+      'microalgae-mixo': [1, 'emerging', 'Additive role.'],
+    }),
+  },
+  {
+    id: 'pet-food', name: 'Pet food', sector: 'Pet food',
+    description: 'Novel protein sources for hypoallergenic and sustainable pet food.',
+    minProtein: 30, valueTier: 'High', indicativePrice: { value: 3.4, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Palatability', 'Digestibility', 'Consistent supply'],
+    regulatory: 'Pet-food safety rules; ingredient approval varies.',
+    blockingFlags: ['mycotoxin', 'gossypol', 'metals'],
+    pathwayFit: fits({
+      'fungal-ssf': [1, 'emerging', 'Protein density limits.'],
+      'submerged-myco': [2, 'emerging', 'Novel protein positioning.'],
+      'enzymatic-hydrolysis': [3, 'established', 'Hydrolysed proteins standard in hypoallergenic diets.'],
+      'alkaline-extraction': [2, 'established', 'Usable as concentrate.'],
+      'insect-bsf': [3, 'established', 'Commercial insect pet foods exist.'],
+      'yeast-scp': [3, 'established', 'Yeast protein commercialised for pets.'],
+      'microalgae-mixo': [1, 'emerging', 'Additive role.'],
+    }),
+  },
+  {
+    id: 'biofertilizer', name: 'Biofertiliser & soil amendment', sector: 'Agriculture',
+    description: 'Frass, digestate and fermentation residues returned to soil as organic amendment.',
+    minProtein: 0, valueTier: 'Low', indicativePrice: { value: 0.15, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Sanitisation', 'Nutrient declaration', 'Heavy-metal limits'],
+    regulatory: 'Fertiliser registration and pathogen limits.',
+    blockingFlags: ['metals'],
+    pathwayFit: fits({
+      'fungal-ssf': [2, 'established', 'Spent substrate as compost.'],
+      'submerged-myco': [1, 'emerging', 'Residual solids only.'],
+      'enzymatic-hydrolysis': [2, 'established', 'Residual fibre cake.'],
+      'alkaline-extraction': [1, 'established', 'Residue requires neutralisation.'],
+      'insect-bsf': [3, 'established', 'Frass is a primary co-product.'],
+      'yeast-scp': [1, 'emerging', 'Spent broth.'],
+      'microalgae-mixo': [2, 'emerging', 'Algal residue as biostimulant.'],
+    }),
+  },
+  {
+    id: 'biomaterials', name: 'Bio-based materials', sector: 'Industrial',
+    description: 'Protein films, adhesives and mycelium composites for packaging and construction.',
+    minProtein: 15, valueTier: 'Medium', indicativePrice: { value: 2.1, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Mechanical properties', 'Process consistency', 'End-of-life profile'],
+    regulatory: 'Food-contact rules apply only for packaging uses.',
+    blockingFlags: [],
+    pathwayFit: fits({
+      'fungal-ssf': [3, 'emerging', 'Mycelium composites grown on fibrous substrates.'],
+      'submerged-myco': [2, 'emerging', 'Mycelium leather-like materials.'],
+      'enzymatic-hydrolysis': [1, 'theoretical', 'Hydrolysis reduces film strength.'],
+      'alkaline-extraction': [2, 'emerging', 'Protein isolates for films and adhesives.'],
+      'insect-bsf': [1, 'theoretical', 'Chitin recovery possible.'],
+      'yeast-scp': [0, 'theoretical', 'Limited application.'],
+      'microalgae-mixo': [1, 'emerging', 'Bioplastic blends.'],
+    }),
+  },
+  {
+    id: 'cosmetic-peptides', name: 'Cosmetic & nutraceutical peptides', sector: 'Industrial',
+    description: 'Bioactive peptide fractions for personal care and supplements.',
+    minProtein: 70, valueTier: 'High', indicativePrice: { value: 18, unit: 'USD/kg product', provenance: 'estimated' },
+    requirements: ['Defined peptide profile', 'Purification', 'Bioactivity evidence'],
+    regulatory: 'Cosmetic ingredient safety dossier; health claims strictly regulated.',
+    blockingFlags: ['metals', 'mycotoxin'],
+    pathwayFit: fits({
+      'fungal-ssf': [0, 'theoretical', 'Product not purified.'],
+      'submerged-myco': [1, 'theoretical', 'Possible extraction target.'],
+      'enzymatic-hydrolysis': [3, 'emerging', 'Controlled hydrolysis generates peptides.'],
+      'alkaline-extraction': [1, 'theoretical', 'Requires further hydrolysis.'],
+      'insect-bsf': [0, 'theoretical', 'Not applicable.'],
+      'yeast-scp': [1, 'emerging', 'Yeast extracts used in cosmetics.'],
+      'microalgae-mixo': [2, 'emerging', 'Algal extracts used in skincare.'],
+    }),
+  },
+]
+
+export const END_USE_SECTORS = ['Human food', 'Animal feed', 'Pet food', 'Agriculture', 'Industrial'] as const
+
+export const endUseById = (id: string) => END_USES.find((e) => e.id === id)

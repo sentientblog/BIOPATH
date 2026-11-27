@@ -1,0 +1,462 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.Batch",
+    "label": "Create table \"Batch\"",
+    "summary": "Creates table \"Batch\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Batch"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Batch\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Batch\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Batch\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Batch\"",
+        "sql": "CREATE TABLE \"public\".\"Batch\" (\n  \"batchCode\" text NOT NULL,\n  \"collectionDate\" timestamptz(3) NOT NULL,\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"feedstockId\" int4 NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"notes\" text,\n  \"quantity\" float8 NOT NULL,\n  \"quantityUnit\" text NOT NULL,\n  \"supplierId\" int4 NOT NULL,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Batch\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Batch\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Batch\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Feedstock",
+    "label": "Create table \"Feedstock\"",
+    "summary": "Creates table \"Feedstock\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Feedstock"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Feedstock\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Feedstock\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Feedstock\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Feedstock\"",
+        "sql": "CREATE TABLE \"public\".\"Feedstock\" (\n  \"category\" text NOT NULL,\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"description\" text,\n  \"id\" SERIAL NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Feedstock\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Feedstock\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Feedstock\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Supplier",
+    "label": "Create table \"Supplier\"",
+    "summary": "Creates table \"Supplier\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Supplier"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Supplier\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Supplier\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Supplier\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Supplier\"",
+        "sql": "CREATE TABLE \"public\".\"Supplier\" (\n  \"county\" text NOT NULL,\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"name\" text NOT NULL,\n  \"siteName\" text NOT NULL,\n  \"town\" text,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Supplier\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Supplier\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Supplier\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.Batch.Batch_batchCode_key",
+    "label": "Add unique constraint on \"Batch\" (batchCode)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "Batch_batchCode_key",
+        "table": "Batch"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"Batch_batchCode_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Batch_batchCode_key",
+          "public",
+          "\"public\".\"Batch\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"Batch_batchCode_key\" on \"Batch\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"Batch_batchCode_key\"",
+        "sql": "ALTER TABLE \"public\".\"Batch\" ADD CONSTRAINT \"Batch_batchCode_key\" UNIQUE (\"batchCode\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"Batch_batchCode_key\" exists on (batchCode)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "Batch_batchCode_key",
+          "public",
+          "\"public\".\"Batch\"",
+          "u",
+          "[\"batchCode\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.Feedstock.Feedstock_name_key",
+    "label": "Add unique constraint on \"Feedstock\" (name)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "Feedstock_name_key",
+        "table": "Feedstock"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"Feedstock_name_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Feedstock_name_key",
+          "public",
+          "\"public\".\"Feedstock\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"Feedstock_name_key\" on \"Feedstock\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"Feedstock_name_key\"",
+        "sql": "ALTER TABLE \"public\".\"Feedstock\" ADD CONSTRAINT \"Feedstock_name_key\" UNIQUE (\"name\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"Feedstock_name_key\" exists on (name)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "Feedstock_name_key",
+          "public",
+          "\"public\".\"Feedstock\"",
+          "u",
+          "[\"name\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Batch.Batch_feedstockId_idx_4e9dfef4",
+    "label": "Create index \"Batch_feedstockId_idx_4e9dfef4\" on \"Batch\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Batch_feedstockId_idx_4e9dfef4",
+        "table": "Batch"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Batch_feedstockId_idx_4e9dfef4\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Batch_feedstockId_idx_4e9dfef4\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Batch_feedstockId_idx_4e9dfef4\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Batch_feedstockId_idx_4e9dfef4\"",
+        "sql": "CREATE INDEX \"Batch_feedstockId_idx_4e9dfef4\" ON \"public\".\"Batch\" (\"feedstockId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Batch_feedstockId_idx_4e9dfef4\" exists on \"Batch\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Batch_feedstockId_idx_4e9dfef4\"",
+          "i",
+          "I",
+          "\"public\".\"Batch\"",
+          "btree",
+          "[\"feedstockId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Batch.Batch_supplierId_idx_c4d9a8b9",
+    "label": "Create index \"Batch_supplierId_idx_c4d9a8b9\" on \"Batch\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Batch_supplierId_idx_c4d9a8b9",
+        "table": "Batch"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Batch_supplierId_idx_c4d9a8b9\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Batch_supplierId_idx_c4d9a8b9\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Batch_supplierId_idx_c4d9a8b9\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Batch_supplierId_idx_c4d9a8b9\"",
+        "sql": "CREATE INDEX \"Batch_supplierId_idx_c4d9a8b9\" ON \"public\".\"Batch\" (\"supplierId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Batch_supplierId_idx_c4d9a8b9\" exists on \"Batch\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Batch_supplierId_idx_c4d9a8b9\"",
+          "i",
+          "I",
+          "\"public\".\"Batch\"",
+          "btree",
+          "[\"supplierId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.Batch.Batch_supplierId_fkey",
+    "label": "Add foreign key \"Batch_supplierId_fkey\" on \"Batch\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "Batch_supplierId_fkey",
+        "table": "Batch"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"Batch_supplierId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Batch_supplierId_fkey",
+          "public",
+          "\"public\".\"Batch\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"Batch_supplierId_fkey\" on \"Batch\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"Batch_supplierId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"Batch\"\nADD CONSTRAINT \"Batch_supplierId_fkey\"\nFOREIGN KEY (\"supplierId\")\nREFERENCES \"public\".\"Supplier\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"Batch_supplierId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "Batch_supplierId_fkey",
+          "public",
+          "\"public\".\"Batch\"",
+          "f",
+          "[\"supplierId\"]",
+          "\"public\".\"Supplier\"",
+          "[\"id\"]",
+          "a",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.Batch.Batch_feedstockId_fkey",
+    "label": "Add foreign key \"Batch_feedstockId_fkey\" on \"Batch\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "Batch_feedstockId_fkey",
+        "table": "Batch"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"Batch_feedstockId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Batch_feedstockId_fkey",
+          "public",
+          "\"public\".\"Batch\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"Batch_feedstockId_fkey\" on \"Batch\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"Batch_feedstockId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"Batch\"\nADD CONSTRAINT \"Batch_feedstockId_fkey\"\nFOREIGN KEY (\"feedstockId\")\nREFERENCES \"public\".\"Feedstock\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"Batch_feedstockId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "Batch_feedstockId_fkey",
+          "public",
+          "\"public\".\"Batch\"",
+          "f",
+          "[\"feedstockId\"]",
+          "\"public\".\"Feedstock\"",
+          "[\"id\"]",
+          "a",
+          "a"
+        ]
+      }
+    ]
+  }
+]

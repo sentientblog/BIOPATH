@@ -1,0 +1,1 @@
+import{n as e}from"./not-found-i5RsCZif.js";var t=()=>{throw e()};export{t as notFoundComponent};

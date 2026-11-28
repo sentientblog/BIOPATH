@@ -14,6 +14,7 @@ import { Route as AllocationRouteImport } from './routes/allocation'
 import { Route as EndUseRouteImport } from './routes/end-use'
 import { Route as FeedstocksRouteImport } from './routes/feedstocks'
 import { Route as FingerprintingRouteImport } from './routes/fingerprinting'
+import { Route as FormulationRouteImport } from './routes/formulation'
 import { Route as PathwaysRouteImport } from './routes/pathways'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as SourceIntelligenceRouteImport } from './routes/source-intelligence'
@@ -43,6 +44,11 @@ const FeedstocksRoute = FeedstocksRouteImport.update({
 const FingerprintingRoute = FingerprintingRouteImport.update({
   id: '/fingerprinting',
   path: '/fingerprinting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormulationRoute = FormulationRouteImport.update({
+  id: '/formulation',
+  path: '/formulation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PathwaysRoute = PathwaysRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/end-use': typeof EndUseRoute
   '/feedstocks': typeof FeedstocksRouteWithChildren
   '/fingerprinting': typeof FingerprintingRoute
+  '/formulation': typeof FormulationRoute
   '/pathways': typeof PathwaysRoute
   '/reports': typeof ReportsRoute
   '/source-intelligence': typeof SourceIntelligenceRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/end-use': typeof EndUseRoute
   '/feedstocks': typeof FeedstocksRouteWithChildren
   '/fingerprinting': typeof FingerprintingRoute
+  '/formulation': typeof FormulationRoute
   '/pathways': typeof PathwaysRoute
   '/reports': typeof ReportsRoute
   '/source-intelligence': typeof SourceIntelligenceRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/end-use': typeof EndUseRoute
   '/feedstocks': typeof FeedstocksRouteWithChildren
   '/fingerprinting': typeof FingerprintingRoute
+  '/formulation': typeof FormulationRoute
   '/pathways': typeof PathwaysRoute
   '/reports': typeof ReportsRoute
   '/source-intelligence': typeof SourceIntelligenceRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/end-use'
     | '/feedstocks'
     | '/fingerprinting'
+    | '/formulation'
     | '/pathways'
     | '/reports'
     | '/source-intelligence'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/end-use'
     | '/feedstocks'
     | '/fingerprinting'
+    | '/formulation'
     | '/pathways'
     | '/reports'
     | '/source-intelligence'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/end-use'
     | '/feedstocks'
     | '/fingerprinting'
+    | '/formulation'
     | '/pathways'
     | '/reports'
     | '/source-intelligence'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   EndUseRoute: typeof EndUseRoute
   FeedstocksRoute: typeof FeedstocksRouteWithChildren
   FingerprintingRoute: typeof FingerprintingRoute
+  FormulationRoute: typeof FormulationRoute
   PathwaysRoute: typeof PathwaysRoute
   ReportsRoute: typeof ReportsRoute
   SourceIntelligenceRoute: typeof SourceIntelligenceRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/fingerprinting'
       fullPath: '/fingerprinting'
       preLoaderRoute: typeof FingerprintingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formulation': {
+      id: '/formulation'
+      path: '/formulation'
+      fullPath: '/formulation'
+      preLoaderRoute: typeof FormulationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pathways': {
@@ -252,6 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   EndUseRoute: EndUseRoute,
   FeedstocksRoute: FeedstocksRouteWithChildren,
   FingerprintingRoute: FingerprintingRoute,
+  FormulationRoute: FormulationRoute,
   PathwaysRoute: PathwaysRoute,
   ReportsRoute: ReportsRoute,
   SourceIntelligenceRoute: SourceIntelligenceRoute,

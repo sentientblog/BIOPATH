@@ -18,9 +18,9 @@ import type {
 } from '@prisma/orm-postgres/contract-types';
 
 export type StorageHash =
-  StorageHashBase<'418aa81839ec6b0000fad8284f99b0519ccebf0c34aff18f6450c41dd5183eee'>;
+  StorageHashBase<'472bb5be882adc85cb4125d7ef2c25ee1946fe6d3636bb045fe862daa4460b07'>;
 export type ExecutionHash =
-  ExecutionHashBase<'722ac42cf7393aea87f5e7eac6c648e5ee12ff9345ff4a3a05231feecf44e710'>;
+  ExecutionHashBase<'ee6309ac1faff751f1098f8b88f5a4a3e171bbaa9e9b0ecd388a28e024292aee'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -327,7 +327,23 @@ export namespace Models {
     name: FieldOutputTypes['public']['Feedstock']['name'];
     updatedAt: FieldOutputTypes['public']['Feedstock']['updatedAt'];
     batches: public_Batch[];
-    readonly [RelationKeys]?: 'batches';
+    reports: public_Report[];
+    readonly [RelationKeys]?: 'batches' | 'reports';
+  };
+  export type public_Report = {
+    author: FieldOutputTypes['public']['Report']['author'];
+    content: FieldOutputTypes['public']['Report']['content'];
+    createdAt: FieldOutputTypes['public']['Report']['createdAt'];
+    feedstockId: FieldOutputTypes['public']['Report']['feedstockId'];
+    id: FieldOutputTypes['public']['Report']['id'];
+    sections: FieldOutputTypes['public']['Report']['sections'];
+    status: FieldOutputTypes['public']['Report']['status'];
+    summary: FieldOutputTypes['public']['Report']['summary'];
+    title: FieldOutputTypes['public']['Report']['title'];
+    type: FieldOutputTypes['public']['Report']['type'];
+    updatedAt: FieldOutputTypes['public']['Report']['updatedAt'];
+    feedstock: public_Feedstock | null;
+    readonly [RelationKeys]?: 'feedstock';
   };
   export type public_Supplier = {
     county: FieldOutputTypes['public']['Supplier']['county'];
@@ -346,6 +362,7 @@ export declare const models: {
   public: {
     Batch: Models.public_Batch;
     Feedstock: Models.public_Feedstock;
+    Report: Models.public_Report;
     Supplier: Models.public_Supplier;
   };
 };
@@ -533,6 +550,115 @@ type ContractBase = Omit<
               indexes: readonly [];
               foreignKeys: readonly [];
             };
+            readonly Report: {
+              columns: {
+                readonly author: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'Research team'>;
+                  };
+                  readonly many: false;
+                };
+                readonly content: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly typeParams: { readonly precision: 3 };
+                  readonly many: false;
+                };
+                readonly feedstockId: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                  readonly many: false;
+                };
+                readonly sections: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly status: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'Draft'>;
+                  };
+                  readonly many: false;
+                };
+                readonly summary: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly title: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly type: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly updatedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly nullable: false;
+                  readonly typeParams: { readonly precision: 3 };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'Report_feedstockId_idx_4e9dfef4';
+                  readonly prefix: 'Report_feedstockId_idx';
+                  readonly columns: readonly ['feedstockId'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Report';
+                    readonly columns: readonly ['feedstockId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Feedstock';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
             readonly Supplier: {
               columns: {
                 readonly county: {
@@ -603,6 +729,7 @@ type ContractBase = Omit<
   readonly roots: {
     readonly Batch: { readonly namespace: 'public' & NamespaceId; readonly model: 'Batch' };
     readonly Feedstock: { readonly namespace: 'public' & NamespaceId; readonly model: 'Feedstock' };
+    readonly Report: { readonly namespace: 'public' & NamespaceId; readonly model: 'Report' };
     readonly Supplier: { readonly namespace: 'public' & NamespaceId; readonly model: 'Supplier' };
   };
   readonly domain: {
@@ -754,6 +881,17 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['feedstockId'];
                 };
               };
+              readonly reports: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Report';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['feedstockId'];
+                };
+              };
             };
             readonly storage: {
               readonly table: 'Feedstock';
@@ -764,6 +902,93 @@ type ContractBase = Omit<
                 readonly description: { readonly column: 'description' };
                 readonly id: { readonly column: 'id' };
                 readonly name: { readonly column: 'name' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+              };
+            };
+          };
+          readonly Report: {
+            readonly fields: {
+              readonly author: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly content: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly typeParams: { readonly precision: 3 };
+                };
+              };
+              readonly feedstockId: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly sections: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly status: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly summary: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly title: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly type: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-date@1';
+                  readonly typeParams: { readonly precision: 3 };
+                };
+              };
+            };
+            readonly relations: {
+              readonly feedstock: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Feedstock';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['feedstockId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'Report';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly author: { readonly column: 'author' };
+                readonly content: { readonly column: 'content' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly feedstockId: { readonly column: 'feedstockId' };
+                readonly id: { readonly column: 'id' };
+                readonly sections: { readonly column: 'sections' };
+                readonly status: { readonly column: 'status' };
+                readonly summary: { readonly column: 'summary' };
+                readonly title: { readonly column: 'title' };
+                readonly type: { readonly column: 'type' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
               };
             };
@@ -928,6 +1153,35 @@ type ContractBase = Omit<
           };
           readonly ref: {
             readonly entry: 'Feedstock';
+            readonly field: 'updatedAt';
+            readonly namespace: 'public';
+          };
+        },
+        {
+          readonly onCreate: {
+            readonly id: 'timestampNow';
+            readonly kind: 'generator';
+            readonly params: { readonly precision: 3 };
+          };
+          readonly ref: {
+            readonly entry: 'Report';
+            readonly field: 'createdAt';
+            readonly namespace: 'public';
+          };
+        },
+        {
+          readonly onCreate: {
+            readonly id: 'timestampNow';
+            readonly kind: 'generator';
+            readonly params: { readonly precision: 3 };
+          };
+          readonly onUpdate: {
+            readonly id: 'timestampNow';
+            readonly kind: 'generator';
+            readonly params: { readonly precision: 3 };
+          };
+          readonly ref: {
+            readonly entry: 'Report';
             readonly field: 'updatedAt';
             readonly namespace: 'public';
           };

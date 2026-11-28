@@ -17,6 +17,7 @@ model Feedstock {
   category    String
   description String?
   batches     Batch[]
+  reports     Report[]
   createdAt   DateTime @default(now()) @onCreate(now())
   updatedAt   temporal.UpdatedAt
 }
@@ -34,4 +35,19 @@ model Batch {
   notes          String?
   createdAt      DateTime  @default(now()) @onCreate(now())
   updatedAt      temporal.UpdatedAt
+}
+
+model Report {
+  id          Int      @id @default(autoincrement())
+  title       String
+  type        String
+  status      String   @default("Draft")
+  summary     String
+  feedstockId Int?
+  feedstock   Feedstock? @relation(fields: [feedstockId], references: [id])
+  sections    String
+  content     String
+  author      String   @default("Research team")
+  createdAt   DateTime @default(now()) @onCreate(now())
+  updatedAt   temporal.UpdatedAt
 }

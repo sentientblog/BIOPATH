@@ -11,6 +11,7 @@ export type AppPath =
   | "/pathways"
   | "/allocation"
   | "/end-use"
+  | "/formulation"
   | "/reports";
 
 export type NavItem =
@@ -62,7 +63,7 @@ export const NAV_SECTIONS: NavSection[] = [
     title: "Product & Market",
     items: [
       { label: "End-Use Intelligence", icon: "category", to: "/end-use" },
-      mod("Ingredient Formulation", "biotech", "ingredient-formulation"),
+      { label: "Ingredient Formulation", icon: "biotech", to: "/formulation" },
       mod("Economics", "monitoring", "economics"),
     ],
   },

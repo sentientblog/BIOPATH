@@ -12,6 +12,10 @@
       "model": "Feedstock",
       "namespace": "public"
     },
+    "Report": {
+      "model": "Report",
+      "namespace": "public"
+    },
     "Supplier": {
       "model": "Supplier",
       "namespace": "public"
@@ -240,6 +244,21 @@
                   "model": "Batch",
                   "namespace": "public"
                 }
+              },
+              "reports": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "feedstockId"
+                  ]
+                },
+                "to": {
+                  "model": "Report",
+                  "namespace": "public"
+                }
               }
             },
             "storage": {
@@ -265,6 +284,150 @@
               },
               "namespaceId": "public",
               "table": "Feedstock"
+            }
+          },
+          "Report": {
+            "fields": {
+              "author": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "content": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "precision": 3
+                  }
+                }
+              },
+              "feedstockId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "sections": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "summary": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "title": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "precision": 3
+                  }
+                }
+              }
+            },
+            "relations": {
+              "feedstock": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "feedstockId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "Feedstock",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "author": {
+                  "column": "author"
+                },
+                "content": {
+                  "column": "content"
+                },
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "feedstockId": {
+                  "column": "feedstockId"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "sections": {
+                  "column": "sections"
+                },
+                "status": {
+                  "column": "status"
+                },
+                "summary": {
+                  "column": "summary"
+                },
+                "title": {
+                  "column": "title"
+                },
+                "type": {
+                  "column": "type"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Report"
             }
           },
           "Supplier": {
@@ -582,6 +745,124 @@
                 }
               ]
             },
+            "Report": {
+              "columns": {
+                "author": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "Research team"
+                  },
+                  "nullable": false
+                },
+                "content": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "createdAt": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false,
+                  "typeParams": {
+                    "precision": 3
+                  }
+                },
+                "feedstockId": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "sections": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "status": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "Draft"
+                  },
+                  "nullable": false
+                },
+                "summary": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "title": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "type": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-date@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false,
+                  "typeParams": {
+                    "precision": 3
+                  }
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "Report_feedstockId_idx_4e9dfef4"
+                  },
+                  "source": {
+                    "columns": [
+                      "feedstockId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Report"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Feedstock"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "feedstockId"
+                  ],
+                  "name": "Report_feedstockId_idx_4e9dfef4",
+                  "prefix": "Report_feedstockId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
             "Supplier": {
               "columns": {
                 "county": {
@@ -649,10 +930,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "418aa81839ec6b0000fad8284f99b0519ccebf0c34aff18f6450c41dd5183eee"
+    "storageHash": "472bb5be882adc85cb4125d7ef2c25ee1946fe6d3636bb045fe862daa4460b07"
   },
   "execution": {
-    "executionHash": "722ac42cf7393aea87f5e7eac6c648e5ee12ff9345ff4a3a05231feecf44e710",
+    "executionHash": "ee6309ac1faff751f1098f8b88f5a4a3e171bbaa9e9b0ecd388a28e024292aee",
     "mutations": {
       "defaults": [
         {
@@ -721,6 +1002,41 @@
           },
           "ref": {
             "entry": "Feedstock",
+            "field": "updatedAt",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "timestampNow",
+            "kind": "generator",
+            "params": {
+              "precision": 3
+            }
+          },
+          "ref": {
+            "entry": "Report",
+            "field": "createdAt",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "timestampNow",
+            "kind": "generator",
+            "params": {
+              "precision": 3
+            }
+          },
+          "onUpdate": {
+            "id": "timestampNow",
+            "kind": "generator",
+            "params": {
+              "precision": 3
+            }
+          },
+          "ref": {
+            "entry": "Report",
             "field": "updatedAt",
             "namespace": "public"
           }
